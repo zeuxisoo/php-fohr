@@ -1,0 +1,6 @@
+.DS_Store
+.*~
+cache/*
+cache/template/*
+cache/language/*
+project_hof.sql

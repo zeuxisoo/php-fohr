@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset='utf-8'> 
+<meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+<title>{$config['site_title']}</title> 
+<link href="${STATIC_URL}/image/favicon.png" rel="shortcut icon" />
+<link type="text/css" rel="stylesheet" href="${STATIC_URL}/stylesheet/reset.css" />
+<link type="text/css" rel="stylesheet" href="${STATIC_URL}/stylesheet/jquery.colorpicker.css" />
+<link type="text/css" rel="stylesheet" href="${STATIC_URL}/stylesheet/default.css" />
+<script language="javascript" type="text/javascript">var SITE_URL = "${SITE_URL}";</script>
+<script language="javascript" type="text/javascript" src="${STATIC_URL}/javascript/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="${STATIC_URL}/javascript/jquery.colorpicker.js"></script>
+<script language="javascript" type="text/javascript" src="${STATIC_URL}/javascript/default.js"></script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="liner"></div>
+	<div id="header">
+		<img src="http://placehold.it/450x80/303f56/FFFFFF" alt="{$config['site_title']}" />
+	</div>
+	<div id="navigation">
+		<ul class="clear-fix">
+			<li class="head"><a href="${SITE_URL}/index.php">主頁</a></li>
+			<!--{if:Valid_Helper::user_logged() === false}-->
+				<li><a href="${SITE_URL}/register.php">註冊</a></li>
+				<li><a href="${SITE_URL}/history.php">戰鬥記錄</a></li>
+			<!--{elseif:empty($user['team_name']) === true}-->
+				<li class="head">請先設定基本資料</li>
+			<!--{else}-->
+				<li><a href="${SITE_URL}/hunt.php">狩獵</a></li>
+				<li><a href="${SITE_URL}/repository.php">倉庫</a></li>
+				<li><a href="${SITE_URL}/town.php">城鎮</a></li>
+				<li><a href="${SITE_URL}/setting.php">設定</a></li>
+				<li><a href="${SITE_URL}/history.php">戰鬥記錄</a></li>
+				<li><a href="${SITE_URL}/index.php?action=logout">登出</a></li>
+			<!--{/if}-->
+		</ul>
+	</div>
+	<div id="announcement">
+		<!--{if:empty($user['team_name']) === true || Valid_Helper::user_logged() === false}-->
+			歡迎來到 {$config['site_title']}
+		<!--{else}-->
+			<ul class="clear-fix">
+				<li class="team_name">{$user['team_name']}</li>
+				<li class="money">{$config['money_name']}：${Util::money_it($user['money'])}</li>
+				<li class="activity_time">移動時間：{$user['activity_time']}/{$config['max_activity_time']}</li>
+			</ul>
+		<!--{/if}-->
+	</div>
+	<div id="content">
