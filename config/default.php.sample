@@ -1,4 +1,24 @@
 <?php
 $config = array(
-	'debug' => true,
+	'default' => array(
+		'debug' => true,
+	),
+
+	'database' => array(
+		'driver'   => 'mysql',
+		'host'     => 'localhost',
+		'username' => 'root',
+		'password' => 'root',
+		'dbname'   => 'test_hof'
+	),
+
+	'cookie' => array(
+		'secret_key' => 'Your Key Here',
+		'life_time'  => 14*24*3600 // 2 weeks = 1209600 seconds
+	),
+
+	'game' => array(
+		'start_money' => 50000,
+		'start_time'  => 5000,
+	)
 );
