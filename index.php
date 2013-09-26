@@ -86,10 +86,6 @@ foreach(array('index', 'home') as $route) {
 	require_once APP_ROOT.'/route/'.$route.'.php';
 }
 
-// Bind app variable
-$app->config('app.config',   $config);
-$app->config('app.site_url', $site_url);
-
 // Bind view variable
 $protocol = isset($_SERVER['HTTPS']) === true ? 'https' : 'http';
 $headers  = $app->request()->headers();
@@ -98,6 +94,10 @@ $site_url = $protocol.'://'.$headers['HOST'].$root_uri;
 
 $app->view()->setData('config',   $config);
 $app->view()->setData('site_url', $site_url);
+
+// Bind app variable
+$app->config('app.config',   $config);
+$app->config('app.site_url', $site_url);
 
 // Start
 $app->run();
