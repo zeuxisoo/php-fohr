@@ -5,6 +5,7 @@ use Zeuxisoo\Core\Validator;
 
 use App\Model\User;
 use App\Helper\Common;
+use App\Helper\Login;
 
 $app->get('/', function() use ($app) {
 	$auth_token = $app->getCookie('auth_token');
@@ -80,13 +81,20 @@ $app->post('/signin', function() use ($app) {
 		}else if (password_verify($password, $user->password) === false) {
 			$valid_message = "密碼不正確";
 		}else{
-			$cookie_life_time = $remember === "y" ? 3600*24*365 : $config['cookie']['life_time'];
+			if ($remember === 'y') {
+				$signin_token = hash('sha256', mt_rand().Common::random_string(8));
 
-			$app->setCookie(
-				'auth_token',
-				Common::create_key($user->id, $user->password, $config['cookie']['secret_key']),
-				time() + $cookie_life_time
-			);
+				// Update user sign in token
+				$user->signin_token = $signin_token;
+				$user->save();
+
+				// Make auth token to cookie for remember
+				$app->setCookie(
+					'auth_token',
+					Login::create_key($user->id, $signin_token, $config['cookie']['secret_key']),
+					time() + $config['cookie']['life_time']
+				);
+			}
 
 			$_SESSION['user'] = array(
 				'id' => $user->id,
