@@ -1,0 +1,13 @@
+body {
+	padding-bottom: 50px;
+}
+
+.thumb_character {
+	min-height: 64px;
+	max-height: 64px;
+}
+
+.caption-padding {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}

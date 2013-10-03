@@ -1,5 +1,67 @@
 {% extends 'layout/frontend.html' %}
 
 {% block container %}
-First
+<form method="post" action="{{ urlFor('home.first') }}">
+	<input type="hidden" name="{{ csrf_key }}" value="{{ csrf_token }}">
+	<fieldset>
+		<legend>隊伍設定</legend>
+		<div class="form-group">
+			<label for="team_name">隊伍名字</label>
+			<input type="text" class="form-control" name="team_name" id="team_name" placeholder="請輸入你的隊伍名字" required="required">
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>隊員設定 (第一個隊員)</legend>
+		<div class="form-group">
+			<label for="character_name">隊員名稱</label>
+			<input type="text" class="form-control" name="character_name" id="character_name" placeholder="請輸入你的隊員名稱" required="required">
+		</div>
+		<div class="form-group">
+			<label for="character_name">隊員列表</label>
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="thumbnail">
+						<img src="{{ site_url }}/static/img/character/warrior_boy.gif" class="thumb_character" alt="warrior boy">
+						<div class="caption caption-padding">
+							<p class="lead">職業: 戰士</p>
+							<p class="lead">性別: 男性</p>
+							<p class="lead">選擇: <input type="radio" name="character_job" value="1_1" /></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="thumbnail">
+						<img src="{{ site_url }}/static/img/character/warrior_girl.gif" class="thumb_character" alt="warrior girl">
+						<div class="caption caption-padding">
+							<p class="lead">職業: 戰士</p>
+							<p class="lead">性別: 女性</p>
+							<p class="lead">選擇: <input type="radio" name="character_job" value="1_2" /></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="thumbnail">
+						<img src="{{ site_url }}/static/img/character/socerer_boy.gif" class="thumb_character" alt="socerer boy">
+						<div class="caption caption-padding">
+							<p class="lead">職業: 法師</p>
+							<p class="lead">性別: 男性</p>
+							<p class="lead">選擇: <input type="radio" name="character_job" value="2_1" /></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="thumbnail">
+						<img src="{{ site_url }}/static/img/character/socerer_girl.gif" class="thumb_character" alt="socerer girl">
+						<div class="caption caption-padding">
+							<p class="lead">職業: 法師</p>
+							<p class="lead">性別: 女性</p>
+							<p class="lead">選擇: <input type="radio" name="character_job" value="2_2" /></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-default">儲存</button>
+	</fieldset>
+</form>
 {% endblock %}

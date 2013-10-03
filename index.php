@@ -23,10 +23,15 @@ spl_autoload_register(function($_class) {
 	$path_info = pathinfo($file_path);
 	$directory = strtolower($path_info['dirname']);
 
-	$class_file = $directory.DIRECTORY_SEPARATOR.$path_info['filename'].'.php';
+	$filename_underscore = preg_replace('/\B([A-Z])/', '_$1', $path_info['filename']);
 
-	if (is_file($class_file) === true) {
-		require_once $class_file;
+	$class_file_normal     = $directory.DIRECTORY_SEPARATOR.$path_info['filename'].'.php';
+	$class_file_underscore = $directory.DIRECTORY_SEPARATOR.$filename_underscore.'.php';
+
+	if (is_file($class_file_normal) === true) {
+		require_once $class_file_normal;
+	}else if (is_file($class_file_underscore) === true) {
+		require_once $class_file_underscore;
 	}else{
 		foreach(array(APP_ROOT.'/model') as $directory) {
 			$file_path = $directory.'/'.strtolower($_class).'.php';
