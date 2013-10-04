@@ -6,6 +6,7 @@ use Zeuxisoo\Core\Validator;
 use App\Model\User;
 use App\Helper\Common;
 use App\Helper\Login;
+use App\Helper\User as UserHelper;
 
 $app->get('/', function() use ($app) {
 	$auth_token = $app->getCookie('auth_token');
@@ -96,10 +97,7 @@ $app->post('/signin', function() use ($app) {
 				);
 			}
 
-			$_SESSION['user'] = array(
-				'id' => $user->id,
-				'email' => $user->email
-			);
+			UserHelper::init_session($user);
 
 			$valid_type     = "success";
 			$valid_message  = "登入成功";
