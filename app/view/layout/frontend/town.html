@@ -1,0 +1,13 @@
+{% extends 'layout/frontend.html' %}
+
+{% block container %}
+<h3>街道</h3>
+<ul class="nav nav-pills nav-justified">
+	<li><a href="{{ urlFor('grocery.buy') }}">雜貨店</a></li>
+	<li><a href="{{ urlFor('forging.refine') }}">鍛冶屋</a></li>
+	<li><a href="{{ urlFor('recruit.index') }}">人才斡旋所</a></li>
+	<li><a href="{{ urlFor('auction.index') }}">拍賣會場</a></li>
+	<li><a href="{{ urlFor('competition.index') }}">競技場</a></li>
+</ul>
+{% block container_town %}{% endblock %}
+{% endblock %}
