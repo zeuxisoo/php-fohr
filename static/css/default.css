@@ -31,3 +31,7 @@ body {
 	min-height: 120px;
 	position: relative;
 }
+
+.align-center {
+	text-align: center;
+}
