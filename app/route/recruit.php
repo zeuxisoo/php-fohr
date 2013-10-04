@@ -3,6 +3,7 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 
 use Zeuxisoo\Core\Validator;
 
+use App\Middleware\Route;
 use App\Model\User;
 use App\Model\TeamMember;
 use App\Helper\User as UserHelper;
@@ -14,13 +15,13 @@ $base_jobs = array(
 	4 => array('name' => '獵人', 'image_boy' => 'hunter_boy.gif',  'image_girl' => 'hunter_girl.gif',  'money' => 4000),
 );
 
-$app->get('/recruit/index', function() use ($app, $base_jobs) {
+$app->get('/recruit/index', Route::require_login(), function() use ($app, $base_jobs) {
 	$app->render('recruit/index.html', array(
 		'base_jobs' => $base_jobs
 	));
 })->name('recruit.index');
 
-$app->post('/recruit/index', function() use ($app, $base_jobs) {
+$app->post('/recruit/index', Route::require_login(), function() use ($app, $base_jobs) {
 	$character_job    = $app->request->post("character_job");
 	$character_name   = $app->request->post("character_name");
 	$character_gender = $app->request->post("character_gender");
