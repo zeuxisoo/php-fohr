@@ -13,7 +13,11 @@ $app->get('/home/index', Route::require_login(), function() use ($app) {
 	if (empty($user->team_name) === true) {
 		$app->render('home/first.html');
 	}else{
-		$app->render('home/index.html');
+		$team_members = TeamMember::find_by_user_id($_SESSION['user']['id']);
+
+		$app->render('home/index.html', array(
+			'team_members' => $team_members
+		));
 	}
 })->name('home.index');
 
@@ -42,9 +46,9 @@ $app->post('/home/first', Route::require_login(), function() use ($app) {
 	}else if (TeamMember::exists_character_name($character_name) === true) {
 		$valid_message = '此角色名稱已經存在';
 	}else{
-		list($character_id, $character_gender) = explode("_", $character_job);
+		list($job_id, $character_gender) = explode("_", $character_job);
 
-		if (in_array($character_id, array(1, 2)) === false) {
+		if (in_array($job_id, array(1, 2)) === false) {
 			$valid_message = '無法識別隊員職業';
 		}elseif (in_array($character_gender, array(1, 2)) === false) {
 			$valid_message = '無法識別隊員性別';
@@ -55,7 +59,7 @@ $app->post('/home/first', Route::require_login(), function() use ($app) {
 
 			TeamMember::create(array(
 				'user_id'          => $user->id,
-				'character_id'     => $character_id,
+				'job_id'           => $job_id,
 				'character_name'   => $character_name,
 				'character_gender' => $character_gender,
 			));

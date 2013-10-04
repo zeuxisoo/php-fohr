@@ -13,7 +13,7 @@ class User extends Base {
 	}
 
 	public static function find_by_email($email) {
-		return \ORM::for_table(self::$_table)->where_equal('email', $email)->find_one();
+		return \ORM::for_table(self::$_table)->where_equal('email', $email)->findOne();
 	}
 
 }

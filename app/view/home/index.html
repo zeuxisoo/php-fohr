@@ -1,5 +1,13 @@
 {% extends 'layout/frontend.html' %}
 
 {% block container %}
-Hof
+<div class="row">
+	{% for team_member in team_members %}
+		<div class="col-lg-2">
+			<a href="#" class="thumbnail carpet {{ cycle(['carpet-odd', 'carpet-even'], loop.index0) }}">
+				<img src="{{ site_url }}/static/img/character/{{ view.job_img(team_member) }}" alt="{{ team_member.character_name }}">
+			</a>
+		</div>
+	{% endfor %}
+</div>
 {% endblock %}

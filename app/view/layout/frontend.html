@@ -25,7 +25,8 @@
 				{% if session.user is empty %}
 					<li><a href="{{ urlFor('index.index') }}">首頁</a></li>
 				{% else %}
-					<li><a href="{{ urlFor('home.index') }}">首頁</a></li>
+					<li><a href="{{ urlFor('home.index') }}">狩獵</a></li>
+					<li><a href="{{ urlFor('town.index') }}">城鎮</a></li>
 				{% endif %}
 			</ul>
 			<ul class="nav navbar-nav pull-right">

@@ -17,6 +17,7 @@ require CONFIG_ROOT.'/default.php';
 use Slim\Slim;
 use Slim\Extras;
 use Slim\Views;
+use App\Helper;
 
 spl_autoload_register(function($_class) {
 	$file_path = str_replace('\\', DIRECTORY_SEPARATOR, $_class);
@@ -85,10 +86,17 @@ $view->parserExtensions = array(
 
 // Slim view global variable
 $view->getEnvironment()->addGlobal("session", $_SESSION);
+$view->getEnvironment()->addGlobal("view", new Helper\View());
 
-// Load build in route
-foreach(array('index', 'home') as $route) {
-	require_once APP_ROOT.'/route/'.$route.'.php';
+// Load app directories
+$auto_load_directories = array(
+	APP_ROOT.'/route/*',
+);
+
+foreach($auto_load_directories as $auto_load_directory) {
+	foreach(glob($auto_load_directory) as $route) {
+		require_once $route;
+	}
 }
 
 // Bind view variable

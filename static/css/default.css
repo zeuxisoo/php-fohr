@@ -11,3 +11,17 @@ body {
 	margin-top: 20px;
 	margin-bottom: 10px;
 }
+
+.carpet {
+	height: 88px;
+	padding-bottom: 20px;
+	border-width: 0px;
+}
+
+.carpet-odd {
+	background: url(../img/carpet/1.gif) no-repeat bottom center;
+}
+
+.carpet-even {
+	background: url(../img/carpet/2.gif) no-repeat bottom center;
+};
