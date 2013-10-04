@@ -44,7 +44,7 @@ $app->post('/home/first', Route::require_login(), function() use ($app) {
 	}else if (User::exists_team_name($team_name) === true) {
 		$valid_message = '此隊伍名稱已存在';
 	}else if (TeamMember::exists_character_name($character_name) === true) {
-		$valid_message = '此角色名稱已經存在';
+		$valid_message = '此隊員名稱已經存在';
 	}else{
 		list($job_id, $character_gender) = explode("_", $character_job);
 
