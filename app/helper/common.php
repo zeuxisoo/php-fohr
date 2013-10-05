@@ -2,7 +2,7 @@
 namespace App\Helper;
 
 class Common {
-	public function random_string($length = 8) {
+	public function randomString($length = 8) {
 		$characters = "abcdefghijklmnopqrstuxyvwzABCDEFGHIJKLMNOPQRSTUXYVWZ+-*#&@!?";
 		$char_length = strlen($characters);
 

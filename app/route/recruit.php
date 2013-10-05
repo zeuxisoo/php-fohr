@@ -15,13 +15,13 @@ $base_jobs = array(
 	4 => array('name' => '獵人', 'image_boy' => 'hunter_boy.gif',  'image_girl' => 'hunter_girl.gif',  'money' => 4000),
 );
 
-$app->get('/recruit/index', Route::require_login(), function() use ($app, $base_jobs) {
+$app->get('/recruit/index', Route::requireLogin(), function() use ($app, $base_jobs) {
 	$app->render('recruit/index.html', array(
 		'base_jobs' => $base_jobs
 	));
 })->name('recruit.index');
 
-$app->post('/recruit/index', Route::require_login(), function() use ($app, $base_jobs) {
+$app->post('/recruit/index', Route::requireLogin(), function() use ($app, $base_jobs) {
 	$character_job    = $app->request->post("character_job");
 	$character_name   = $app->request->post("character_name");
 	$character_gender = $app->request->post("character_gender");
@@ -37,7 +37,7 @@ $app->post('/recruit/index', Route::require_login(), function() use ($app, $base
 
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
-	}else if (TeamMember::exists_character_name($character_name) === true) {
+	}else if (TeamMember::existsCharacterName($character_name) === true) {
 		$valid_message = '此隊員名稱已經存在';
 	}else if (in_array($character_job, array(1, 2, 3, 4)) === false) {
 		$valid_message = '無法識別隊員職業';
@@ -50,7 +50,7 @@ $app->post('/recruit/index', Route::require_login(), function() use ($app, $base
 		if ($user->money < $recruit_money) {
 			$valid_message = '金錢不足';
 		}else{
-			UserHelper::take_money($user, $recruit_money);
+			UserHelper::takeMoney($user, $recruit_money);
 
 			TeamMember::create(array(
 				'user_id'          => $user->id,

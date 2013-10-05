@@ -34,7 +34,7 @@ $app->map('/signup', function() use ($app) {
 
 		if ($validator->inValid() === true) {
 			$valid_message = $validator->first_error();
-		}else if (User::exists_email($email) === true) {
+		}else if (User::existsEmail($email) === true) {
 			$valid_message = "電郵地址已被註冊";
 		}else{
 			$config = $app->config('app.config');
@@ -74,7 +74,7 @@ $app->post('/signin', function() use ($app) {
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
 	}else{
-		$user   = User::find_by_email($email);
+		$user   = User::findByEmail($email);
 		$config = $app->config('app.config');
 
 		if (empty($user) === true)  {
@@ -83,7 +83,7 @@ $app->post('/signin', function() use ($app) {
 			$valid_message = "密碼不正確";
 		}else{
 			if ($remember === 'y') {
-				$signin_token = hash('sha256', mt_rand().Common::random_string(8));
+				$signin_token = hash('sha256', mt_rand().Common::randomString(8));
 
 				// Update user sign in token
 				$user->signin_token = $signin_token;
@@ -92,12 +92,12 @@ $app->post('/signin', function() use ($app) {
 				// Make auth token to cookie for remember
 				$app->setCookie(
 					'auth_token',
-					Login::create_key($user->id, $signin_token, $config['cookie']['secret_key']),
+					Login::createKey($user->id, $signin_token, $config['cookie']['secret_key']),
 					time() + $config['cookie']['life_time']
 				);
 			}
 
-			UserHelper::init_session($user);
+			UserHelper::initSession($user);
 
 			$valid_type     = "success";
 			$valid_message  = "登入成功";

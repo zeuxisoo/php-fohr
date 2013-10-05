@@ -7,13 +7,13 @@ use App\Middleware\Route;
 use App\Model\User;
 use App\Model\TeamMember;
 
-$app->get('/home/index', Route::require_login(), function() use ($app) {
+$app->get('/home/index', Route::requireLogin(), function() use ($app) {
 	$user = User::get($_SESSION['user']['id']);
 
 	if (empty($user->team_name) === true) {
 		$app->render('home/first.html');
 	}else{
-		$team_members = TeamMember::find_by_user_id($_SESSION['user']['id']);
+		$team_members = TeamMember::findByUserId($_SESSION['user']['id']);
 
 		$app->render('home/index.html', array(
 			'team_members' => $team_members
@@ -21,7 +21,7 @@ $app->get('/home/index', Route::require_login(), function() use ($app) {
 	}
 })->name('home.index');
 
-$app->post('/home/first', Route::require_login(), function() use ($app) {
+$app->post('/home/first', Route::requireLogin(), function() use ($app) {
 	$team_name      = $app->request->post('team_name');
 	$character_name = $app->request->post('character_name');
 	$character_job  = $app->request->post('character_job');
@@ -41,9 +41,9 @@ $app->post('/home/first', Route::require_login(), function() use ($app) {
 
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
-	}else if (User::exists_team_name($team_name) === true) {
+	}else if (User::existsTeamName($team_name) === true) {
 		$valid_message = '此隊伍名稱已存在';
-	}else if (TeamMember::exists_character_name($character_name) === true) {
+	}else if (TeamMember::existsCharacterName($character_name) === true) {
 		$valid_message = '此隊員名稱已經存在';
 	}else{
 		list($job_id, $character_gender) = explode("_", $character_job);
