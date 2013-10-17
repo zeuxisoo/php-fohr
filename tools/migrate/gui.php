@@ -12,16 +12,18 @@ require_once dirname(__FILE__).'/library/database.php';
 require_once dirname(__FILE__).'/library/migrate.php';
 require_once dirname(__FILE__).'/library/migration.php';
 
+require_once dirname(dirname(dirname(__FILE__))).'/config/default.php';
+
 Migrate::config(array(
 	'migrate_folder' => MIGRATE_ROOT,
 ));
 
 Database::init(array(
-	'adapter'	=> "mysql",
-	'host'		=> "127.0.0.1",	// Do not use localhost instead of 127.0.0.1, throw mysql error
-	'username'	=> "root",
-	'password'	=> "root",
-	'database'	=> "test_hof",
+	'adapter'	=> $config['database']['driver'],
+	'host'		=> $config['database']['host'],
+	'username'	=> $config['database']['username'],
+	'password'	=> $config['database']['password'],
+	'database'	=> $config['database']['dbname'],
 	'charset'	=> 'utf-8',
 	'port'		=> "3306",
 	'prefix'	=> "",
