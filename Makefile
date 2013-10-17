@@ -5,4 +5,5 @@ install:
 	curl -s https://getcomposer.org/installer | php
 	php composer.phar install
 
-	mv config/default.php.sample config/default.php
+	cp config/default.php.sample config/default.php
+	cp tools/migrate/migrate/schema_version.php.sample tools/migrate/migrate/schema_version.php
