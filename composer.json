@@ -5,7 +5,7 @@
 		"slim/extras": "2.0.*",
 		"twig/twig": "v1.13.2",
 		"zeuxisoo/core-validator": "dev-master",
-		"j4mie/idiorm": "v1.4.0",
+		"j4mie/paris": "v1.4.1",
 		"ircmaxell/password-compat": "dev-master"
 	}
 }
