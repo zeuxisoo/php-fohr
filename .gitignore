@@ -3,7 +3,9 @@
 
 composer.phar
 composer.lock
+
 config/default.php
+tools/migrate/migrate/schema_version.php
 
 cache/view
 vendor
