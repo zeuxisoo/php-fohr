@@ -1,0 +1,11 @@
+{
+	"require": {
+		"slim/slim": "2.*",
+		"slim/views": "0.1.*",
+		"slim/extras": "2.0.*",
+		"twig/twig": "v1.13.2",
+		"zeuxisoo/core-validator": "dev-master",
+		"j4mie/paris": "v1.4.1",
+		"ircmaxell/password-compat": "dev-master"
+	}
+}

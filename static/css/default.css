@@ -1,0 +1,37 @@
+body {
+	padding-bottom: 50px;
+}
+
+.thumb-character {
+	min-height: 64px;
+	max-height: 64px;
+}
+
+.caption-padding {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.carpet {
+	height: 88px;
+	padding-bottom: 20px;
+	border-width: 0px;
+}
+
+.carpet-odd {
+	background: url(../img/carpet/1.gif) no-repeat bottom center;
+}
+
+.carpet-even {
+	background: url(../img/carpet/2.gif) no-repeat bottom center;
+}
+
+.panel-job-list {
+	text-align: center;
+	min-height: 120px;
+	position: relative;
+}
+
+.align-center {
+	text-align: center;
+}

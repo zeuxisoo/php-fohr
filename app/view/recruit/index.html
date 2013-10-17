@@ -1,0 +1,51 @@
+{% extends 'layout/frontend.html' %}
+
+{% block container %}
+<h3>
+	人才斡旋所
+	<a href="{{ urlFor('town.index') }}">
+		<small>
+			<i class="glyphicon glyphicon-home"></i> 街道
+		</small>
+	</a>
+</h3>
+<hr>
+<form method="post" action="{{ urlFor('recruit.index') }}">
+	<input type="hidden" name="{{ csrf_key }}" value="{{ csrf_token }}">
+	<h4>現有人物的職業</h4>
+	{% for base_job in base_jobs %}
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ base_job.name }}</div>
+				<div class="panel-body panel-job-list">
+					<div class="col-lg-6">
+						<img src="{{ site_url }}/static/img/character/{{ base_job.image_boy }}">
+					</div>
+					<div class="col-lg-6">
+						<img src="{{ site_url }}/static/img/character/{{ base_job.image_girl }}">
+					</div>
+				</div>
+				<div class="panel-footer">
+					<label class="radio-inline">
+						<input type="radio" name="character_job" value="{{ loop.index }}" required="required" /> {{ view.formatMoney(base_job.money) }}
+					</label>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	<h4>聘請人物的資料</h4>
+	<div class="form-group">
+		<label for="character_name">隊員名稱</label>
+		<input type="text" class="form-control" name="character_name" id="character_name" placeholder="請輸入你的隊員名稱" required="required">
+	</div>
+	<div class="form-group">
+		<label for="character_gender">隊員性別</label>
+		<select class="form-control" name="character_gender" id="character_gender" required="required">
+			<option value="1">男性</option>
+			<option value="2">女性</option>
+		</select>
+	</div>
+	<button type="submit" class="btn btn-default">聘請</button>
+</form>
+{% endblock %}
