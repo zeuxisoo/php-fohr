@@ -6,6 +6,7 @@
 		"twig/twig": "v1.14.2",
 		"zeuxisoo/core-validator": "dev-master",
 		"j4mie/paris": "v1.4.1",
-		"ircmaxell/password-compat": "dev-master"
+		"ircmaxell/password-compat": "dev-master",
+        "raveren/kint": "v0.9"
 	}
 }
