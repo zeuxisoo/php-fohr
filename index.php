@@ -99,14 +99,12 @@ foreach($auto_load_directories as $auto_load_directory) {
 	}
 }
 
-// Bind view variable
-$protocol = isset($_SERVER['HTTPS']) === true ? 'https' : 'http';
-$headers  = $app->request()->headers();
-$root_uri = $app->request()->getRootUri();
-$site_url = $protocol.'://'.$headers['HOST'].$root_uri;
+// Get site URL
+$request   = $app->request();
+$site_url  = $request->getUrl().$request->getRootUri();
 
-$app->view()->setData('config',   $config);
-$app->view()->setData('site_url', $site_url);
+// Bind view variable
+$app->view()->setData('config', $config);
 
 // Bind app variable
 $app->config('app.config',   $config);
