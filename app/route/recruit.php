@@ -4,8 +4,6 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 use Zeuxisoo\Core\Validator;
 
 use App\Middleware\Route;
-use App\Model\User;
-use App\Model\TeamMember;
 use App\Helper\User as UserHelper;
 
 $base_jobs = array(
@@ -37,14 +35,14 @@ $app->post('/recruit/index', Route::requireLogin(), function() use ($app, $base_
 
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
-	}else if (TeamMember::existsCharacterName($character_name) === true) {
+	}else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
 		$valid_message = '此隊員名稱已經存在';
 	}else if (in_array($character_job, array(1, 2, 3, 4)) === false) {
 		$valid_message = '無法識別隊員職業';
 	}else if (in_array($character_gender, array(1, 2)) === false) {
 		$valid_message = '無法識別隊員性別';
 	}else{
-		$user          = User::get($_SESSION['user']['id']);
+		$user          = Model::factory('User')->findOne($_SESSION['user']['id']);
 		$recruit_money = $base_jobs[$character_job]['money'];
 
 		if ($user->money < $recruit_money) {
@@ -52,12 +50,12 @@ $app->post('/recruit/index', Route::requireLogin(), function() use ($app, $base_
 		}else{
 			UserHelper::takeMoney($user, $recruit_money);
 
-			TeamMember::create(array(
+			Model::factory('TeamMember')->create(array(
 				'user_id'          => $user->id,
 				'job_id'           => $character_job,
 				'character_name'   => $character_name,
 				'character_gender' => $character_gender,
-			));
+			))->save();
 
 			$valid_type    = 'success';
 			$valid_message = '聘請完成';

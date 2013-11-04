@@ -3,9 +3,8 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 
 use Zeuxisoo\Core\Validator;
 
-use App\Model\User;
-use App\Helper\Common;
-use App\Helper\Login;
+use App\Helper\Common as CommonHelper;
+use App\Helper\Login as LoginHelper;
 use App\Helper\User as UserHelper;
 
 $app->get('/', function() use ($app) {
@@ -34,17 +33,17 @@ $app->map('/signup', function() use ($app) {
 
 		if ($validator->inValid() === true) {
 			$valid_message = $validator->first_error();
-		}else if (User::existsEmail($email) === true) {
+		}else if (Model::factory('User')->filter('findByEmail', $email)->count() >= 1) {
 			$valid_message = "電郵地址已被註冊";
 		}else{
 			$config = $app->config('app.config');
 
-			User::create(array(
+			Model::factory('User')->create(array(
 				'email'    => $email,
 				'password' => password_hash($password, PASSWORD_BCRYPT),
 				'money'    => $config['game']['start_money'],
 				'time'     => $config['game']['start_time']
-			));
+			))->save();
 
 			$valid_type    = "success";
 			$valid_message = "註冊成功";
@@ -74,7 +73,7 @@ $app->post('/signin', function() use ($app) {
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
 	}else{
-		$user   = User::findByEmail($email);
+		$user   = Model::factory('User')->filter('findByEmail', $email)->findOne();
 		$config = $app->config('app.config');
 
 		if (empty($user) === true)  {
@@ -83,7 +82,7 @@ $app->post('/signin', function() use ($app) {
 			$valid_message = "密碼不正確";
 		}else{
 			if ($remember === 'y') {
-				$signin_token = hash('sha256', mt_rand().Common::randomString(8));
+				$signin_token = hash('sha256', mt_rand().CommonHelper::randomString(8));
 
 				// Update user sign in token
 				$user->signin_token = $signin_token;
@@ -92,7 +91,7 @@ $app->post('/signin', function() use ($app) {
 				// Make auth token to cookie for remember
 				$app->setCookie(
 					'auth_token',
-					Login::createKey($user->id, $signin_token, $config['cookie']['secret_key']),
+					LoginHelper::createKey($user->id, $signin_token, $config['cookie']['secret_key']),
 					time() + $config['cookie']['life_time']
 				);
 			}

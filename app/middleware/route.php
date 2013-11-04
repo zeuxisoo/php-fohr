@@ -3,9 +3,8 @@ namespace App\Middleware;
 
 use Slim\Slim;
 
-use App\Helper\Login;
+use App\Helper\Login as LoginHelper;
 use App\Helper\User as UserHelper;
-use App\Model\User;
 
 class Route {
 	public static function requireLogin() {
@@ -17,7 +16,7 @@ class Route {
 			$auth_token     = $app->getCookie('auth_token');
 
 			if (empty($_SESSION['user']) === false && empty($_SESSION['user']['id']) === false) {
-				$user    = User::get(hexdec($_SESSION['user']['id']));
+				$user    = \Model::factory('User')->findOne(hexdec($_SESSION['user']['id']));
 				$config  = $app->config('app.config');
 
 				if (empty($user) === true) {
@@ -28,9 +27,9 @@ class Route {
 					$valid_type = "success";
 				}
 			}elseif (isset($auth_token) === true && empty($auth_token) === false) {
-				list($user_id, $signin_token, $auth_key) = explode(":", Login::makeAuth($auth_token, "DECODE"));
+				list($user_id, $signin_token, $auth_key) = explode(":", LoginHelper::makeAuth($auth_token, "DECODE"));
 
-				$user        = User::get(hexdec($user_id));
+				$user    = \Model::factory('User')->findOne(hexdec($user_id));
 				$config  = $app->config('app.config');
 
 				if (empty($user) === true) {

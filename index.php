@@ -33,13 +33,6 @@ spl_autoload_register(function($_class) {
 		require_once $class_file_normal;
 	}else if (is_file($class_file_underscore) === true) {
 		require_once $class_file_underscore;
-	}else{
-		foreach(array(APP_ROOT.'/model') as $directory) {
-			$file_path = $directory.'/'.strtolower($_class).'.php';
-			if (is_file($file_path) === true) {
-				require $file_path;
-			}
-		}
 	}
 });
 
@@ -60,6 +53,8 @@ if (strtolower($config['database']['driver']) === "mysql") {
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
 	));
 }
+
+Model::$auto_prefix_models = '\\App\\Model\\';
 
 // Slim
 $app = new Slim(array(

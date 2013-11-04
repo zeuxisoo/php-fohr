@@ -4,16 +4,14 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 use Zeuxisoo\Core\Validator;
 
 use App\Middleware\Route;
-use App\Model\User;
-use App\Model\TeamMember;
 
 $app->get('/home/index', Route::requireLogin(), function() use ($app) {
-	$user = User::get($_SESSION['user']['id']);
+	$user = Model::factory('User')->findOne($_SESSION['user']['id']);
 
 	if (empty($user->team_name) === true) {
 		$app->render('home/first.html');
 	}else{
-		$team_members = TeamMember::findByUserId($_SESSION['user']['id']);
+		$team_members = Model::factory('TeamMember')->filter('findWithJobInfoByUserId', $_SESSION['user']['id'])->findMany();
 
 		$app->render('home/index.html', array(
 			'team_members' => $team_members
@@ -41,9 +39,9 @@ $app->post('/home/first', Route::requireLogin(), function() use ($app) {
 
 	if ($validator->inValid() === true) {
 		$valid_message = $validator->first_error();
-	}else if (User::existsTeamName($team_name) === true) {
+	}else if (Model::factory('User')->filter('findByTeamName', $team_name)->count() >= 1) {
 		$valid_message = '此隊伍名稱已存在';
-	}else if (TeamMember::existsCharacterName($character_name) === true) {
+	}else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
 		$valid_message = '此隊員名稱已經存在';
 	}else{
 		list($job_id, $character_gender) = explode("_", $character_job);
@@ -53,16 +51,16 @@ $app->post('/home/first', Route::requireLogin(), function() use ($app) {
 		}elseif (in_array($character_gender, array(1, 2)) === false) {
 			$valid_message = '無法識別隊員性別';
 		}else{
-			$user = User::get($_SESSION['user']['id']);
+			$user = Model::factory('User')->findOne($_SESSION['user']['id']);
 			$user->team_name = $team_name;
 			$user->save();
 
-			TeamMember::create(array(
+			Model::factory('TeamMember')->create(array(
 				'user_id'          => $user->id,
 				'job_id'           => $job_id,
 				'character_name'   => $character_name,
 				'character_gender' => $character_gender,
-			));
+			))->save();
 
 			$valid_type    = "success";
 			$valid_message = "初始化隊伍完成";
