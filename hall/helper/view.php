@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper;
+namespace Hall\Helper;
 
 class View {
 	public function jobImage($team_member) {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper;
+namespace Hall\Helper;
 
 class User {
 	public static function takeMoney($user, $money) {

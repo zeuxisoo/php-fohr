@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper;
+namespace Hall\Helper;
 
 class Common {
 	public function randomString($length = 8) {

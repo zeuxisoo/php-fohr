@@ -3,7 +3,7 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 
 use Zeuxisoo\Core\Validator;
 
-use App\Middleware\Route;
+use Hall\Middleware\Route;
 
 $app->get('/home/index', Route::requireLogin(), function() use ($app) {
 	$user = Model::factory('User')->findOne($_SESSION['user']['id']);

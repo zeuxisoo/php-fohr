@@ -3,9 +3,9 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 
 use Zeuxisoo\Core\Validator;
 
-use App\Helper\Common as CommonHelper;
-use App\Helper\Login as LoginHelper;
-use App\Helper\User as UserHelper;
+use Hall\Helper\Common as CommonHelper;
+use Hall\Helper\Login as LoginHelper;
+use Hall\Helper\User as UserHelper;
 
 $app->get('/', function() use ($app) {
 	$auth_token = $app->getCookie('auth_token');

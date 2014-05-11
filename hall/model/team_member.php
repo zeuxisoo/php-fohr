@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace Hall\Model;
 
 class TeamMember extends \Model {
     public static $_table = 'team_member';

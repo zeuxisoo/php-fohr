@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper;
+namespace Hall\Helper;
 
 class Login {
 	public static function createKey($user_id, $signin_token, $cookie_secret_key) {

@@ -3,8 +3,8 @@ if (defined("IN_APPS") === false) exit("Access Dead");
 
 use Zeuxisoo\Core\Validator;
 
-use App\Middleware\Route;
-use App\Helper\User as UserHelper;
+use Hall\Middleware\Route;
+use Hall\Helper\User as UserHelper;
 
 $base_jobs = array(
 	1 => array('name' => '戰士', 'image_boy' => 'warrior_boy.gif', 'image_girl' => 'warrior_girl.gif', 'money' => 2000),

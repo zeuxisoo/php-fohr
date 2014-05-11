@@ -1,7 +1,7 @@
 <?php
 if (defined("IN_APPS") === false) exit("Access Dead");
 
-use App\Middleware\Route;
+use Hall\Middleware\Route;
 
 $app->get('/auction/index', Route::requireLogin(), function() use ($app) {
 	$app->render('auction/index.html');

@@ -1,10 +1,10 @@
 <?php
-namespace App\Middleware;
+namespace Hall\Middleware;
 
 use Slim\Slim;
 
-use App\Helper\Login as LoginHelper;
-use App\Helper\User as UserHelper;
+use Hall\Helper\Login as LoginHelper;
+use Hall\Helper\User as UserHelper;
 
 class Route {
 	public static function requireLogin() {

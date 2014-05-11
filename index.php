@@ -4,7 +4,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 
 define('IN_APPS',     true);
 define('WWW_ROOT',    dirname(__FILE__));
-define('APP_ROOT',    WWW_ROOT.'/app');
+define('APP_ROOT',    WWW_ROOT.'/hall');
 define('CACHE_ROOT',  WWW_ROOT.'/cache');
 define('CONFIG_ROOT', WWW_ROOT.'/config');
 define('DATA_ROOT',   WWW_ROOT.'/data');
@@ -17,7 +17,7 @@ require CONFIG_ROOT.'/default.php';
 use Slim\Slim;
 use Slim\Extras;
 use Slim\Views;
-use App\Helper;
+use Hall\Helper;
 
 spl_autoload_register(function($_class) {
 	$file_path = str_replace('\\', DIRECTORY_SEPARATOR, $_class);
@@ -54,7 +54,7 @@ if (strtolower($config['database']['driver']) === "mysql") {
 	));
 }
 
-Model::$auto_prefix_models = '\\App\\Model\\';
+Model::$auto_prefix_models = '\\Hall\\Model\\';
 
 // Slim
 $app = new Slim(array(
