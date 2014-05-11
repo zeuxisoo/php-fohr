@@ -2,15 +2,15 @@
 
 {% block container %}
 <div class="row">
-	{% for team_member in team_members %}
-		<div class="col-lg-2">
-			<div class="thumbnail carpet {{ cycle(['carpet-odd', 'carpet-even'], loop.index0) }}">
-				<img src="{{ baseUrl() }}/static/img/character/{{ view.jobImage(team_member) }}" alt="{{ team_member.character_name }}">
-				<div class="caption align-center">
-					<h3>{{ team_member.character_name }}</h3>
-				</div>
-			</div>
-		</div>
-	{% endfor %}
+    {% for team_member in team_members %}
+        <div class="col-lg-2">
+            <div class="thumbnail carpet {{ cycle(['carpet-odd', 'carpet-even'], loop.index0) }}">
+                <img src="{{ baseUrl() }}/static/img/character/{{ view.jobImage(team_member) }}" alt="{{ team_member.character_name }}">
+                <div class="caption align-center">
+                    <h3>{{ team_member.character_name }}</h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
