@@ -5,11 +5,11 @@ $config = array(
 	),
 
 	'database' => array(
-		'driver'   => 'mysql',
-		'host'     => 'localhost',
-		'username' => 'root',
-		'password' => 'root',
-		'dbname'   => 'test_hof'
+		'driver'   => 'sqlite',
+		'host'     => './data/default.sqlite',
+		'username' => '',
+		'password' => '',
+		'dbname'   => ''
 	),
 
 	'cookie' => array(
