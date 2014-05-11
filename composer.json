@@ -7,6 +7,8 @@
 		"j4mie/paris": "v1.4.2",
 		"ircmaxell/password-compat": "1.0.3",
 		"raveren/kint": "v0.9",
+		"pimple/pimple": "v2.0.0",
+		"davedevelopment/phpmig": "dev-master",
 		"zeuxisoo/core-validator": "dev-master"
 	}
 }
