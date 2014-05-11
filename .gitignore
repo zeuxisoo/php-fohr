@@ -9,3 +9,5 @@ tools/migrate/migrate/schema_version.php
 
 cache/view
 vendor
+
+*.sqlite
