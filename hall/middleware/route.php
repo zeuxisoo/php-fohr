@@ -3,8 +3,7 @@ namespace Hall\Middleware;
 
 use Slim\Slim;
 
-use Hall\Helper\Login as LoginHelper;
-use Hall\Helper\User as UserHelper;
+use Hall\Helper\Secure;
 
 class Route {
 	public static function requireLogin() {
@@ -22,12 +21,12 @@ class Route {
 				if (empty($user) === true) {
 					$valid_message = '找不到這個用戶';
 				}else{
-					UserHelper::initSession($user);
+					$user->initSession();
 
 					$valid_type = "success";
 				}
 			}elseif (isset($auth_token) === true && empty($auth_token) === false) {
-				list($user_id, $signin_token, $auth_key) = explode(":", LoginHelper::makeAuth($auth_token, "DECODE"));
+				list($user_id, $signin_token, $auth_key) = explode(":", Secure::makeAuth($auth_token, "DECODE"));
 
 				$user    = \Model::factory('User')->findOne(hexdec($user_id));
 				$config  = $app->config('app.config');
@@ -37,7 +36,7 @@ class Route {
 				}else if (hash('sha256', $user_id.$signin_token.$config['cookie']['secret_key']) !== $auth_key) {
 					$valid_message = '無法識別用戶身份';
 				}else{
-					UserHelper::initSession($user);
+					Secure::initSession($user);
 
 					$valid_type     = "success";
 					$valid_redirect = $app->router()->getCurrentRoute()->getName();

@@ -18,6 +18,7 @@ use Slim\Slim;
 use Slim\Extras;
 use Slim\Views;
 use Hall\Helper;
+use Hall\Middleware\Route;
 
 spl_autoload_register(function($_class) {
 	$file_path = str_replace('\\', DIRECTORY_SEPARATOR, $_class);
@@ -83,16 +84,28 @@ $view->parserExtensions = array(
 $view->getEnvironment()->addGlobal("session", $_SESSION);
 $view->getEnvironment()->addGlobal("view", new Helper\View());
 
-// Load app directories
-$auto_load_directories = array(
-	APP_ROOT.'/route/*',
-);
+// Add routes
+$app->get('/', '\Hall\Controller\Index:index')->name('index.index');
+$app->map('/signup', '\Hall\Controller\Index:signup')->name('index.signup')->via('GET', 'POST');
+$app->post('/signin', '\Hall\Controller\Index:signin')->name('index.signin');
+$app->get('/signout', '\Hall\Controller\Index:signout')->name('index.signout');
 
-foreach($auto_load_directories as $auto_load_directory) {
-	foreach(glob($auto_load_directory) as $route) {
-		require_once $route;
-	}
-}
+$app->get('/home/index', Route::requireLogin(), '\Hall\Controller\Home:index')->name('home.index');
+$app->post('/home/first', Route::requireLogin(), '\Hall\Controller\Home:first')->name('home.first');
+
+$app->get('/auction/index', Route::requireLogin(), '\Hall\Controller\auction:index')->name('auction.index');
+
+$app->get('/competition/index', Route::requireLogin(), '\Hall\Controller\competition:index')->name('competition.index');
+
+$app->get('/forging/refine', Route::requireLogin(), 'Hall\Controller\forging:refine')->name('forging.refine');
+$app->get('/forging/create', Route::requireLogin(), 'Hall\Controller\forging:create')->name('forging.create');
+
+$app->get('/grocery/buy', Route::requireLogin(), 'Hall\Controller\grocery:buy')->name('grocery.buy');
+$app->get('/grocery/sell', Route::requireLogin(), 'Hall\Controller\grocery:sell')->name('grocery.sell');
+$app->get('/grocery/work', Route::requireLogin(), 'Hall\Controller\grocery:work')->name('grocery.work');
+$app->get('/town/index', Route::requireLogin(), 'Hall\Controller\town:index')->name('town.index');
+
+$app->map('/recruit/index', Route::requireLogin(), 'Hall\Controller\recruit:index')->name('recruit.index')->via('GET', 'POST');
 
 // Get site URL
 $request   = $app->request();
