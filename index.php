@@ -90,22 +90,37 @@ $app->map('/signup', '\Hall\Controller\Index:signup')->name('index.signup')->via
 $app->post('/signin', '\Hall\Controller\Index:signin')->name('index.signin');
 $app->get('/signout', '\Hall\Controller\Index:signout')->name('index.signout');
 
-$app->get('/home/index', Route::requireLogin(), '\Hall\Controller\Home:index')->name('home.index');
-$app->post('/home/first', Route::requireLogin(), '\Hall\Controller\Home:first')->name('home.first');
+$app->group('/home', Route::requireLogin(), function() use ($app) {
+	$app->get('/index','\Hall\Controller\Home:index')->name('home.index');
+	$app->post('/first', '\Hall\Controller\Home:first')->name('home.first');
+});
 
-$app->get('/auction/index', Route::requireLogin(), '\Hall\Controller\auction:index')->name('auction.index');
+$app->group('/auction', Route::requireLogin(), function() use ($app) {
+	$app->get('/index', '\Hall\Controller\auction:index')->name('auction.index');
+});
 
-$app->get('/competition/index', Route::requireLogin(), '\Hall\Controller\competition:index')->name('competition.index');
+$app->group('/competition', Route::requireLogin(), function() use ($app) {
+	$app->get('/index', '\Hall\Controller\competition:index')->name('competition.index');
+});
 
-$app->get('/forging/refine', Route::requireLogin(), 'Hall\Controller\forging:refine')->name('forging.refine');
-$app->get('/forging/create', Route::requireLogin(), 'Hall\Controller\forging:create')->name('forging.create');
+$app->group('/forging', Route::requireLogin(), function() use ($app) {
+	$app->get('/refine', 'Hall\Controller\forging:refine')->name('forging.refine');
+	$app->get('/create', 'Hall\Controller\forging:create')->name('forging.create');
+});
 
-$app->get('/grocery/buy', Route::requireLogin(), 'Hall\Controller\grocery:buy')->name('grocery.buy');
-$app->get('/grocery/sell', Route::requireLogin(), 'Hall\Controller\grocery:sell')->name('grocery.sell');
-$app->get('/grocery/work', Route::requireLogin(), 'Hall\Controller\grocery:work')->name('grocery.work');
-$app->get('/town/index', Route::requireLogin(), 'Hall\Controller\town:index')->name('town.index');
+$app->group('/grocery', Route::requireLogin(), function() use ($app) {
+	$app->get('/buy', 'Hall\Controller\grocery:buy')->name('grocery.buy');
+	$app->get('/sell', 'Hall\Controller\grocery:sell')->name('grocery.sell');
+	$app->get('/work', 'Hall\Controller\grocery:work')->name('grocery.work');
+});
 
-$app->map('/recruit/index', Route::requireLogin(), 'Hall\Controller\recruit:index')->name('recruit.index')->via('GET', 'POST');
+$app->group('/town', Route::requireLogin(), function() use ($app) {
+	$app->get('/town/index', 'Hall\Controller\town:index')->name('town.index');
+});
+
+$app->group('/recruit', Route::requireLogin(), function() use ($app) {
+	$app->map('/index', 'Hall\Controller\recruit:index')->name('recruit.index')->via('GET', 'POST');
+});
 
 // Get site URL
 $request   = $app->request();
