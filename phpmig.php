@@ -10,7 +10,7 @@ define('CONFIG_ROOT', WWW_ROOT.'/config');
 $container = new Pimple();
 
 $container['db'] = function() {
-    require CONFIG_ROOT.'/default.php';
+    $config = require(CONFIG_ROOT.'/default.php');
 
     ORM::configure('sqlite:'.$config['database']['host']);
 
