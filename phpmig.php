@@ -4,7 +4,6 @@ date_default_timezone_set('Asia/Hong_Kong');
 use \Phpmig\Adapter;
 use \Pimple;
 
-define('IN_APPS',     true);
 define('WWW_ROOT',    dirname(__FILE__));
 define('CONFIG_ROOT', WWW_ROOT.'/config');
 

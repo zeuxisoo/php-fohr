@@ -2,7 +2,6 @@
 session_start();
 date_default_timezone_set("Asia/Hong_Kong");
 
-define('IN_APPS',     true);
 define('WWW_ROOT',    dirname(__FILE__));
 define('APP_ROOT',    WWW_ROOT.'/hall');
 define('CACHE_ROOT',  WWW_ROOT.'/cache');
