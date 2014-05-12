@@ -12,7 +12,7 @@ class Index extends Controller {
         $auth_token = $this->slim->getCookie('auth_token');
 
         if (empty($_SESSION['user']['email']) === false || empty($auth_token) === false) {
-            $this->slim->redirect($slim->urlFor('home.index'));
+            $this->slim->redirect($this->slim->urlFor('home.index'));
         }else{
             $this->slim->render('index.html');
         }
