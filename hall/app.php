@@ -103,30 +103,30 @@ class App {
         });
 
         $this->slim->group('/auction', Route::requireLogin(), function() {
-            $this->slim->get('/index', '\Hall\Controller\auction:index')->name('auction.index');
+            $this->slim->get('/index', '\Hall\Controller\Auction:index')->name('auction.index');
         });
 
         $this->slim->group('/competition', Route::requireLogin(), function() {
-            $this->slim->get('/index', '\Hall\Controller\competition:index')->name('competition.index');
+            $this->slim->get('/index', '\Hall\Controller\Competition:index')->name('competition.index');
         });
 
         $this->slim->group('/forging', Route::requireLogin(), function() {
-            $this->slim->get('/refine', 'Hall\Controller\forging:refine')->name('forging.refine');
-            $this->slim->get('/create', 'Hall\Controller\forging:create')->name('forging.create');
+            $this->slim->get('/refine', 'Hall\Controller\Forging:refine')->name('forging.refine');
+            $this->slim->get('/create', 'Hall\Controller\Forging:create')->name('forging.create');
         });
 
         $this->slim->group('/grocery', Route::requireLogin(), function() {
-            $this->slim->get('/buy', 'Hall\Controller\grocery:buy')->name('grocery.buy');
-            $this->slim->get('/sell', 'Hall\Controller\grocery:sell')->name('grocery.sell');
-            $this->slim->get('/work', 'Hall\Controller\grocery:work')->name('grocery.work');
+            $this->slim->get('/buy', 'Hall\Controller\Grocery:buy')->name('grocery.buy');
+            $this->slim->get('/sell', 'Hall\Controller\Grocery:sell')->name('grocery.sell');
+            $this->slim->get('/work', 'Hall\Controller\Grocery:work')->name('grocery.work');
         });
 
         $this->slim->group('/town', Route::requireLogin(), function() {
-            $this->slim->get('/town/index', 'Hall\Controller\town:index')->name('town.index');
+            $this->slim->get('/town/index', 'Hall\Controller\Town:index')->name('town.index');
         });
 
         $this->slim->group('/recruit', Route::requireLogin(), function() {
-            $this->slim->map('/index', 'Hall\Controller\recruit:index')->name('recruit.index')->via('GET', 'POST');
+            $this->slim->map('/index', 'Hall\Controller\Recruit:index')->name('recruit.index')->via('GET', 'POST');
         });
     }
 
