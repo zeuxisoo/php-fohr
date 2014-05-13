@@ -13,17 +13,33 @@ body {
 }
 
 .carpet {
-    height: 88px;
-    padding-bottom: 20px;
     border-width: 0px;
 }
 
-.carpet-odd {
+.carpet .carpet-image {
+    height: 100px;
+}
+
+.carpet .carpet-image img.warrior, img.socerer, img.pastor {
+    position: relative;
+    top: 5px;
+}
+
+.carpet .carpet-image img.hunter {
+    position: relative;
+    bottom: 10px;
+}
+
+.carpet .carpet-odd {
     background: url(../img/carpet/1.gif) no-repeat bottom center;
 }
 
-.carpet-even {
+.carpet .carpet-even {
     background: url(../img/carpet/2.gif) no-repeat bottom center;
+}
+
+.carpet .carpet-caption {
+    padding: 0px;
 }
 
 .panel-job-list {
