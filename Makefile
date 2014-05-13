@@ -18,3 +18,6 @@ server:
 
 clean:
 	find ./cache/view/* -type d -maxdepth 0 -exec rm -rf {} \;
+
+database:
+	./vendor/bin/phpmig migrate
