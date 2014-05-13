@@ -33,7 +33,7 @@ class Index extends Controller {
             $valid_message = '';
 
             if ($validator->inValid() === true) {
-                $valid_message = $validator->first_error();
+                $valid_message = $validator->firstError();
             }else if (Model::factory('User')->filter('findByEmail', $email)->count() >= 1) {
                 $valid_message = "電郵地址已被註冊";
             }else{
@@ -73,7 +73,7 @@ class Index extends Controller {
         $valid_redirect = 'index.index';
 
         if ($validator->inValid() === true) {
-            $valid_message = $validator->first_error();
+            $valid_message = $validator->firstError();
         }else{
             $user   = Model::factory('User')->filter('findByEmail', $email)->findOne();
             $config = $this->slim->config('app.config');

@@ -34,7 +34,7 @@ class Recruit extends Controller {
             $character_gender = strtolower($character_gender);
 
             if ($validator->inValid() === true) {
-                $valid_message = $validator->first_error();
+                $valid_message = $validator->firstError();
             }else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
                 $valid_message = '此隊員名稱已經存在';
             }else if (in_array($character_job, array('warrior', 'socerer', 'pastor', 'hunter')) === false) {

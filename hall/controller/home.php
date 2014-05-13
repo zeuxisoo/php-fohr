@@ -40,7 +40,7 @@ class Home extends Controller {
         $valid_message = '';
 
         if ($validator->inValid() === true) {
-            $valid_message = $validator->first_error();
+            $valid_message = $validator->firstError();
         }else if (Model::factory('User')->filter('findByTeamName', $team_name)->count() >= 1) {
             $valid_message = '此隊伍名稱已存在';
         }else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
