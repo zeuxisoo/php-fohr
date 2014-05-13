@@ -16,18 +16,18 @@
     {% for base_job in base_jobs %}
         <div class="col-lg-3">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ base_job.name }}</div>
+                <div class="panel-heading">{{ base_job.job.name }}</div>
                 <div class="panel-body panel-job-list">
                     <div class="col-lg-6">
-                        <img src="{{ baseUrl() }}/static/img/character/{{ base_job.image_boy }}">
+                        <img src="{{ baseUrl() }}/static/img/character/{{ base_job.job.image_boy }}">
                     </div>
                     <div class="col-lg-6">
-                        <img src="{{ baseUrl() }}/static/img/character/{{ base_job.image_girl }}">
+                        <img src="{{ baseUrl() }}/static/img/character/{{ base_job.job.image_girl }}">
                     </div>
                 </div>
                 <div class="panel-footer">
                     <label class="radio-inline">
-                        <input type="radio" name="character_job" value="{{ loop.index }}" required="required" /> {{ view.formatMoney(base_job.money) }}
+                        <input type="radio" name="character_job" value="{{ base_job.job.id }}" required="required" /> {{ view.formatMoney(base_job.money) }}
                     </label>
                 </div>
             </div>
@@ -42,8 +42,8 @@
     <div class="form-group">
         <label for="character_gender">隊員性別</label>
         <select class="form-control" name="character_gender" id="character_gender" required="required">
-            <option value="1">男性</option>
-            <option value="2">女性</option>
+            <option value="boy">男性</option>
+            <option value="girl">女性</option>
         </select>
     </div>
     <button type="submit" class="btn btn-default">聘請</button>

@@ -13,7 +13,7 @@ class Home extends Controller {
         if (empty($user->team_name) === true) {
             $this->slim->render('home/first.html');
         }else{
-            $team_members = Model::factory('TeamMember')->filter('findWithJobInfoByUserId', $_SESSION['user']['id'])->findMany();
+            $team_members = Model::factory('TeamMember')->where_equal('user_id', $_SESSION['user']['id'])->findMany();
 
             $this->slim->render('home/index.html', array(
                 'team_members' => $team_members
@@ -33,7 +33,7 @@ class Home extends Controller {
                   ->add('team_name', '隊伍名稱只能在 30 個字元以內')->rule('max_length', 30)
                   ->add('character_name', '隊員名稱只能在 30 個字元以內')->rule('max_length', 30)
                   ->add('character_job', '無法識別隊員職業格式')->rule('custom', function($format) {
-                        return preg_match("/^\d_\d$/", $format) == true;
+                        return preg_match("/^([A-Za-z]+)_(boy|girl)$/", $format) == true;
                   });
 
         $valid_type    = 'error';
@@ -46,11 +46,14 @@ class Home extends Controller {
         }else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
             $valid_message = '此隊員名稱已經存在';
         }else{
-            list($job_id, $character_gender) = explode("_", $character_job);
+            list($job_name, $character_gender) = explode("_", $character_job);
 
-            if (in_array($job_id, array(1, 2)) === false) {
+            $job_name         = strtolower($job_name);
+            $character_gender = strtolower($character_gender);
+
+            if (in_array($job_name, array('warrior', 'socerer')) === false) {
                 $valid_message = '無法識別隊員職業';
-            }elseif (in_array($character_gender, array(1, 2)) === false) {
+            }elseif (in_array($character_gender, array('boy', 'girl')) === false) {
                 $valid_message = '無法識別隊員性別';
             }else{
                 $user = Model::factory('User')->findOne($_SESSION['user']['id']);
@@ -59,7 +62,7 @@ class Home extends Controller {
 
                 Model::factory('TeamMember')->create(array(
                     'user_id'          => $user->id,
-                    'job_id'           => $job_id,
+                    'job_name'         => $job_name,
                     'character_name'   => $character_name,
                     'character_gender' => $character_gender,
                 ))->save();

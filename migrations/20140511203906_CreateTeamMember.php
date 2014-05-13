@@ -14,9 +14,9 @@ class CreateTeamMember extends Migration
             CREATE TABLE team_member (
                  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                  "user_id" INTEGER,
-                 "job_id" INTEGER(2,0),
+                 "job_name" TEXT(30,0),
                  "character_name" TEXT(30,0),
-                 "character_gender" INTEGER(1,0),
+                 "character_gender" TEXT(5,0),
                  "create_at" INTEGER,
                  "update_at" INTEGER
             );

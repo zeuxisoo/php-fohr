@@ -4,15 +4,16 @@ namespace Hall\Controller;
 use Model;
 use Zeuxisoo\Core\Validator;
 use Hall\Base\Controller;
+use Hall\Base\Job;
 
 class Recruit extends Controller {
 
     public function index() {
         $base_jobs = array(
-            1 => array('name' => '戰士', 'image_boy' => 'warrior_boy.gif', 'image_girl' => 'warrior_girl.gif', 'money' => 2000),
-            2 => array('name' => '法師', 'image_boy' => 'socerer_boy.gif', 'image_girl' => 'socerer_girl.gif', 'money' => 2000),
-            3 => array('name' => '牧師', 'image_boy' => 'pastor_boy.gif',  'image_girl' => 'pastor_girl.gif',  'money' => 2500),
-            4 => array('name' => '獵人', 'image_boy' => 'hunter_boy.gif',  'image_girl' => 'hunter_girl.gif',  'money' => 4000),
+            1 => array('job' => Job::factory('warrior'), 'money' => 2000),
+            2 => array('job' => Job::factory('socerer'), 'money' => 2000),
+            3 => array('job' => Job::factory('pastor'), 'money' => 2500),
+            4 => array('job' => Job::factory('hunter'), 'money' => 4000),
         );
 
         if ($this->slim->request->isPost() === true) {
@@ -29,13 +30,16 @@ class Recruit extends Controller {
             $valid_type    = 'error';
             $valid_message = '';
 
+            $character_job    = strtolower($character_job);
+            $character_gender = strtolower($character_gender);
+
             if ($validator->inValid() === true) {
                 $valid_message = $validator->first_error();
             }else if (Model::factory('TeamMember')->filter('findByCharacterName', $character_name)->count() >= 1) {
                 $valid_message = '此隊員名稱已經存在';
-            }else if (in_array($character_job, array(1, 2, 3, 4)) === false) {
+            }else if (in_array($character_job, array('warrior', 'socerer', 'pastor', 'hunter')) === false) {
                 $valid_message = '無法識別隊員職業';
-            }else if (in_array($character_gender, array(1, 2)) === false) {
+            }else if (in_array($character_gender, array('boy', 'girl')) === false) {
                 $valid_message = '無法識別隊員性別';
             }else{
                 $user          = Model::factory('User')->findOne($_SESSION['user']['id']);
@@ -48,7 +52,7 @@ class Recruit extends Controller {
 
                     Model::factory('TeamMember')->create(array(
                         'user_id'          => $user->id,
-                        'job_id'           => $character_job,
+                        'job_name'         => $character_job,
                         'character_name'   => $character_name,
                         'character_gender' => $character_gender,
                     ))->save();
