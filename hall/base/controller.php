@@ -1,5 +1,5 @@
 <?php
-namespace Hall\Helper;
+namespace Hall\Base;
 
 use Slim\Slim;
 

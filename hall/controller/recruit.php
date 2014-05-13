@@ -3,7 +3,7 @@ namespace Hall\Controller;
 
 use Model;
 use Zeuxisoo\Core\Validator;
-use Hall\Helper\Controller;
+use Hall\Base\Controller;
 
 class Recruit extends Controller {
 

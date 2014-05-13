@@ -1,7 +1,7 @@
 <?php
 namespace Hall\Controller;
 
-use Hall\Helper\Controller;
+use Hall\Base\Controller;
 
 class Forging extends Controller {
 
