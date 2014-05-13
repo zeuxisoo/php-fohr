@@ -5,7 +5,7 @@ class User extends \Model {
     public static $_table = 'user';
 
     // Association
-    public function team_members() {
+    public function teamMembers() {
         return $this->has_many('TeamMember');
     }
 
